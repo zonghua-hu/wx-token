@@ -8,6 +8,7 @@
 
 namespace App\Domain\Tokens;
 
+use App\Foundation\Repository\TokenRepository;
 use WecarSwoole\Client\API;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
@@ -22,31 +23,23 @@ class DeveloperToken extends CommonOperation
     public $appId;
     public $appSecret;
     public $cacheKey;
-    public $accessToken = false;
 
     /**
      * DeveloperToken constructor.
      * @param $appId
      * @param $appSecret
      * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws \Exception
      */
     public function __construct($appId,$appSecret)
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class);
+        parent::__construct(CacheInterface::class, LoggerInterface::class,TokenRepository::class);
         $this->appId = $appId;
         $this->appSecret = $appSecret;
         $this->cacheKey = $this->appId.$this->key;
-
         $this->freshToken();
-        $this->getAccessToken();
     }
-    /**
-     * @return bool
-     */
-    private function getAccessToken()
-    {
-        return $this->accessToken;
-    }
+
     /**
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \Exception
@@ -60,12 +53,12 @@ class DeveloperToken extends CommonOperation
         $result = API::invoke('wechat:developer_token.get', $paramsToken);
         $accessToken = $result->getBody();
         if ($accessToken['status'] != 200) {
-            $this->accessToken = false;
+            $this->appAccessToken = false;
             $this->logger->info(">>>开发者模式：获取最新token失败".$this->appId."原因：".json_encode($accessToken));
         }
-        $this->accessToken = $accessToken['access_token'];
-        if ($this->accessToken) {
-            $this->cache->set($this->cacheKey,$this->accessToken);
+        $this->appAccessToken = $accessToken['access_token'];
+        if ($this->appAccessToken) {
+            $this->cache->set($this->cacheKey,$this->appAccessToken);
         }
     }
 }

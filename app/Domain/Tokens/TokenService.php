@@ -25,81 +25,48 @@ use Psr\SimpleCache\CacheInterface;
  */
 class TokenService extends CommonOperation
 {
-    private $openPlatform = 1;    //开放平台模式
-    private $developerToken = 2;  //开发者模式
-
     public $appId;
-    public $appIdSecret;
-    public $accessToken = false;
-    public $appTicket;
-
-    public $tokenRepository;
     public $cacheKey;
 
     /**
      * TokenService constructor.
-     * @param TokenRepository $tokenRepository
      * @param $appData
      * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws Exception
      */
-    public function __construct(TokenRepository $tokenRepository, $appData)
+    public function __construct($appData)
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class);
-        $this->tokenRepository = $tokenRepository;
+        parent::__construct(CacheInterface::class, LoggerInterface::class,TokenRepository::class);
+
         $this->appId = $appData['appId'];
         $this->cacheKey = $this->appId.$this->key;
         $this->initToken();
     }
-    /**
-     * 获取accessToken
-     * @return mixed
-     */
-    public function getAccessToken()
-    {
-        return $this->accessToken;
-    }
+
     /**
      * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws Exception
      */
     private function initToken()
     {
-        $this->accessToken = $this->cache->get($this->cacheKey);
-        if (!$this->accessToken) {
-            $this->accessToken = self::forceFreshToken();
+        $this->appAccessToken = $this->cache->get($this->cacheKey);
+        if (!$this->appAccessToken) {
+            $this->appAccessToken = self::forceFreshToken();
         }
-    }
-    /**
-     * 获取ticket
-     * @throws Exception
-     */
-    private function getTicket()
-    {
-        $ticketConfig = $this->tokenRepository->getComponentTicket();
-        if (!$ticketConfig) {
-            throw new Exception('获取comTicket出错', 401);
-        }
-        $this->appTicket = str_replace("ticket@@@", "", $ticketConfig['component_verify_ticket']);
     }
 
     /**
      * 刷新token
-     * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws Exception
      */
     private function forceFreshToken()
     {
-        $appConfig = $this->tokenRepository->getAppIdInfo($this->appId);
+        $appConfig = $this->tokenResp->getAppIdInfo($this->appId);
         if (!$appConfig) {
             throw new Exception('获取'.$this->appId.'商户信息出错', 402);
         }
-        $this->appIdSecret = $appConfig['app_secret'];
-        $tokenType = isset($appConfig['pattern'])?$appConfig['pattern']:1;
-        if ($tokenType == $this->developerToken) {
-            $this->accessToken = new DeveloperToken($this->appId, $this->appIdSecret);
-        } elseif ($tokenType == $this->openPlatform) {
-            if (self::getTicket()) {
-                $this->accessToken = new OpenPlatformToken($this->appId, $this->appTicket);
-            }
-        }
+        $appIdSecret = $appConfig['app_secret'];
+        $tokenType = isset($appConfig['pattern']) ? $appConfig['pattern']:1;
+        new TokenPattern($this->appId, $appIdSecret, $tokenType);
     }
 }

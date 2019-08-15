@@ -17,17 +17,13 @@ use App\Foundation\Repository\TokenRepository;
 
 class TokenAutoFresh extends CommonOperation
 {
-    private $openPlatformToken = 1;  //开放平台标识
-    private $developerToken  = 2;    //开发者标识,暂未用到
-    public $tokenResp;
     /**
      * TokenAutoFresh constructor.
      * @throws \Exception
      */
     public function __construct()
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class);
-        $this->tokenResp = new TokenRepository();
+        parent::__construct(CacheInterface::class, LoggerInterface::class,TokenRepository::class);
     }
     /**
      * 1.从缓存中获取token，
@@ -49,14 +45,14 @@ class TokenAutoFresh extends CommonOperation
             $appSecret =  $appInfo['app_secret'];
             $appPattern = isset($appInfo['pattern'])?$appInfo['pattern']:1;
 
-            $accessToken = $this->cache->get($appId.$this->key);
-            if (!$accessToken) {
+            $this->appAccessToken = $this->cache->get($appId.$this->key);
+            if (!$this->appAccessToken) {
                 $resultToken = $this->freshToken($appId,$appSecret,$appPattern);
                 if (!$resultToken) {
                     continue;
                 }
             }
-            $this->logger->info("当前商户".$appId."accessToken处于有效期，暂不刷新，Token值为".$accessToken);
+            $this->logger->info("当前商户".$appId."accessToken处于有效期，暂不刷新，Token值为".$this->appAccessToken);
         }
     }
     /**
@@ -68,39 +64,21 @@ class TokenAutoFresh extends CommonOperation
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \Exception
      */
-    private function freshToken($appId,$appSecret,$appPattern)
+    private function freshToken($appId, $appSecret, $appPattern)
     {
-        if ($appPattern == $this->openPlatformToken) {
-            $appTicket = self::getTicket();
-            if (!$appTicket) {
-                $this->logger->info(">>>开放平台模式：获取最新componentTicker失败".$appId);
-                return false;
-            }
-            $comAccessToken = new OpenPlatformToken($appId,$appTicket);
-            if (!$comAccessToken) {
+        if ($appPattern == $this->openPlatform) {
+            $this->appAccessToken = new OpenPlatformToken($appId);
+            if (! $this->appAccessToken) {
                 $this->logger->info(">>>开放平台模式：获取最新comAccessToken失败".$appId);
                 return false;
             }
         } else {
-            $accessToken = new DeveloperToken($appId,$appSecret);
-            if (!$accessToken) {
+            $this->appAccessToken = new DeveloperToken($appId, $appSecret);
+            if (! $this->appAccessToken) {
                 $this->logger->info(">>>开发者模式：获取最新accessToken失败".$appId);
                 return false;
             }
         }
         return true;
-    }
-    /**
-     * 获取第三方刷新token的令牌ticket
-     * @return bool|mixed
-     * @throws \Exception
-     */
-    private function getTicket()
-    {
-        $ticketConfig = $this->tokenResp->getComponentTicket();
-        if (!$ticketConfig) {
-            throw new Exception('获取comTicket出错', 401);
-        }
-        return str_replace("ticket@@@", "", $ticketConfig['component_verify_ticket']);
     }
 }

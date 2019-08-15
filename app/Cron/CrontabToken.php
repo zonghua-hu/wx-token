@@ -8,7 +8,6 @@
 
 namespace App\Cron;
 
-use DI\Container;
 use EasySwoole\EasySwoole\Crontab\AbstractCronTask;
 use swoole_server;
 
@@ -39,7 +38,7 @@ class CrontabToken  extends AbstractCronTask
      */
     static function run(swoole_server $server, int $taskId, int $fromWorkerId, $flags = null)
     {
-        Container::get(CrontabToken::class)->run();
+        (new \DI\Container)->get(TokenAutoFresh::class)->run();
     }
 
 }

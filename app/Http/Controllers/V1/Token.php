@@ -8,7 +8,6 @@
 namespace App\Http\Controllers\V1;
 
 use App\Domain\Tokens\TokenService;
-use App\Foundation\Repository\TokenRepository;
 use WecarSwoole\Http\Controller;
 
 
@@ -38,12 +37,11 @@ class Token extends Controller
     public function getToken()
     {
         $appId = $this->params();
-        $tokenService = new TokenService(TokenRepository::class,$appId);
-        $accessToken = $tokenService->getAccessToken();
+        $tokenService = new TokenService($appId);
+        $accessToken = $tokenService->returnAccessToken();
         if (!$accessToken) {
             $this->return('',10086,'获取accessToken失败~',2);
         }
         $this->return($accessToken,200,'succeed');
     }
-
 }

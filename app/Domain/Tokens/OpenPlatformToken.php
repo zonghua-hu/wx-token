@@ -8,6 +8,7 @@
 
 namespace App\Domain\Tokens;
 
+use App\Foundation\Repository\TokenRepository;
 use WecarSwoole\Client\API;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
@@ -23,36 +24,24 @@ class OpenPlatformToken extends CommonOperation
 
     public $cacheKey;
     public $comCacheKey;
-
-    public $comAppId = 'wx46990617c3d8bf81';
-    public $comAppSecret = '615d70ee3463062891771cfb1b4f7ef3';
-    public $comAccessToken = false;
-    public $comTicket;
-
     public $appId;
-    public $appAccessToken;
 
     /**
      * OpenPlatformToken constructor.
      * @param $appId
-     * @param $comTicket
      * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws \Exception
      */
-    public function __construct($appId, $comTicket)
+    public function __construct($appId)
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class);
-        $this->comTicket = $comTicket;
+        parent::__construct(CacheInterface::class, LoggerInterface::class,TokenRepository::class);
+
         $this->appId = $appId;
         $this->cacheKey = $this->appId.$this->key;
         $this->comCacheKey = $this->comAppId.$this->key;
-
         $this->getComponentToken();
-        $this->refreshComToken();
+        $this->refreshToken();
         $this->returnAccessToken();
-    }
-    private function returnAccessToken()
-    {
-        return $this->appAccessToken;
     }
 
     /**
@@ -63,14 +52,14 @@ class OpenPlatformToken extends CommonOperation
     {
         $this->comAccessToken = $this->cache->get($this->comCacheKey);
         if (!$this->comAccessToken) {
-            $this->comAccessToken = new ComponentToken($this->comTicket);
+            $this->comAccessToken = new ComponentToken();
         }
     }
     /**
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \Exception
      */
-    private function refreshComToken()
+    private function refreshToken()
     {
         $appIdTokenData = [
             'component_appid' => $this->comAppId,
