@@ -41,7 +41,6 @@ class ComponentToken extends CommonOperation
     {
         return $this->comAccessToken;
     }
-
     /**
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \Exception

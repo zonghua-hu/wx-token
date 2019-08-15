@@ -7,7 +7,6 @@
  */
 namespace App\Http\Controllers\V1;
 
-use App\Domain\Tokens\CacheToken;
 use App\Domain\Tokens\TokenService;
 use App\Foundation\Repository\TokenRepository;
 use WecarSwoole\Http\Controller;

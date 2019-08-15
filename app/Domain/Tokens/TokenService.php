@@ -9,6 +9,7 @@
 namespace App\Domain\Tokens;
 
 use App\Foundation\Repository\TokenRepository;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 /**
@@ -31,7 +32,6 @@ class TokenService extends CommonOperation
     public $appIdSecret;
     public $accessToken = false;
     public $appTicket;
-    public $tokenType;
 
     public $tokenRepository;
     public $cacheKey;
@@ -68,24 +68,29 @@ class TokenService extends CommonOperation
             $this->accessToken = self::forceFreshToken();
         }
     }
-
+    /**
+     * 获取ticket
+     * @throws Exception
+     */
     private function getTicket()
     {
         $ticketConfig = $this->tokenRepository->getComponentTicket();
         if (!$ticketConfig) {
-            return false;
+            throw new Exception('获取comTicket出错', 401);
         }
         $this->appTicket = str_replace("ticket@@@", "", $ticketConfig['component_verify_ticket']);
     }
+
     /**
-     * @return bool
+     * 刷新token
      * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws Exception
      */
-    public function forceFreshToken()
+    private function forceFreshToken()
     {
         $appConfig = $this->tokenRepository->getAppIdInfo($this->appId);
         if (!$appConfig) {
-            return false;
+            throw new Exception('获取'.$this->appId.'商户信息出错', 402);
         }
         $this->appIdSecret = $appConfig['app_secret'];
         $tokenType = isset($appConfig['pattern'])?$appConfig['pattern']:1;
