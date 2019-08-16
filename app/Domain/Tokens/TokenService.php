@@ -36,10 +36,10 @@ class TokenService extends CommonOperation
      */
     public function __construct($appData)
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class,TokenRepository::class);
+        parent::__construct(CacheInterface::class, LoggerInterface::class, TokenRepository::class);
 
         $this->appId = $appData['appId'];
-        $this->cacheKey = $this->appId.$this->key;
+        $this->cacheKey = $this->appId . $this->key;
         $this->initToken();
     }
 
@@ -58,15 +58,16 @@ class TokenService extends CommonOperation
     /**
      * 刷新token
      * @throws Exception
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     private function forceFreshToken()
     {
         $appConfig = $this->tokenResp->getAppIdInfo($this->appId);
         if (!$appConfig) {
-            throw new Exception('获取'.$this->appId.'商户信息出错', 402);
+            throw new Exception('获取' . $this->appId . '商户信息出错', 402);
         }
         $appIdSecret = $appConfig['app_secret'];
-        $tokenType = isset($appConfig['pattern']) ? $appConfig['pattern']:1;
+        $tokenType = isset($appConfig['pattern']) ? $appConfig['pattern'] : 1;
         new TokenPattern($this->appId, $appIdSecret, $tokenType);
     }
 }

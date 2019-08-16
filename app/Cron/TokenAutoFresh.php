@@ -19,12 +19,15 @@ class TokenAutoFresh extends CommonOperation
 {
     /**
      * TokenAutoFresh constructor.
-     * @throws \Exception
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws Exception
      */
     public function __construct()
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class,TokenRepository::class);
+        parent::__construct(CacheInterface::class, LoggerInterface::class, TokenRepository::class);
+        $this->run();
     }
+
     /**
      * 1.从缓存中获取token，
      * 2.未获取到，则强刷token
@@ -34,7 +37,7 @@ class TokenAutoFresh extends CommonOperation
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \Exception
      */
-    public function run()
+    private function run()
     {
         $appConfig = $this->tokenResp->getAllAppConfig();
         if (!$appConfig) {
@@ -43,16 +46,16 @@ class TokenAutoFresh extends CommonOperation
         foreach ($appConfig as $appInfo) {
             $appId = $appInfo['app_id'];
             $appSecret =  $appInfo['app_secret'];
-            $appPattern = isset($appInfo['pattern'])?$appInfo['pattern']:1;
+            $appPattern = isset($appInfo['pattern']) ? $appInfo['pattern'] : 1;
 
-            $this->appAccessToken = $this->cache->get($appId.$this->key);
+            $this->appAccessToken = $this->cache->get($appId . $this->key);
             if (!$this->appAccessToken) {
-                $resultToken = $this->freshToken($appId,$appSecret,$appPattern);
+                $resultToken = $this->freshToken($appId, $appSecret, $appPattern);
                 if (!$resultToken) {
                     continue;
                 }
             }
-            $this->logger->info("当前商户".$appId."accessToken处于有效期，暂不刷新，Token值为".$this->appAccessToken);
+            $this->logger->info("当前商户" . $appId . "accessToken处于有效期，暂不刷新，Token值为" . $this->appAccessToken);
         }
     }
     /**
@@ -69,13 +72,13 @@ class TokenAutoFresh extends CommonOperation
         if ($appPattern == $this->openPlatform) {
             $this->appAccessToken = new OpenPlatformToken($appId);
             if (! $this->appAccessToken) {
-                $this->logger->info(">>>开放平台模式：获取最新comAccessToken失败".$appId);
+                $this->logger->info(">>>开放平台模式：获取最新comAccessToken失败" . $appId);
                 return false;
             }
         } else {
             $this->appAccessToken = new DeveloperToken($appId, $appSecret);
             if (! $this->appAccessToken) {
-                $this->logger->info(">>>开发者模式：获取最新accessToken失败".$appId);
+                $this->logger->info(">>>开发者模式：获取最新accessToken失败" . $appId);
                 return false;
             }
         }

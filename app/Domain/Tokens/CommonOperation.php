@@ -74,7 +74,7 @@ abstract class CommonOperation
      * @param TokenRepository $tokenRepository
      * @throws Exception
      */
-    public function __construct(CacheInterface $cache, LoggerInterface $logger,TokenRepository $tokenRepository)
+    public function __construct(CacheInterface $cache, LoggerInterface $logger, TokenRepository $tokenRepository)
     {
         $this->logger = $logger;
         $this->cache = $cache;

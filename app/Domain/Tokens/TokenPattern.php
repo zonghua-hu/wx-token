@@ -25,17 +25,15 @@ class TokenPattern extends CommonOperation
      * @param $appSecret
      * @param $tokenType
      * @throws \Exception
+     * @throws InvalidArgumentException
      */
-    public function __construct($appId,$appSecret,$tokenType)
+    public function __construct($appId, $appSecret, $tokenType)
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class,TokenRepository::class);
+        parent::__construct(CacheInterface::class, LoggerInterface::class, TokenRepository::class);
         $this->appId = $appId;
         $this->appSecret = $appSecret;
         $this->tokenType = $tokenType;
-        try {
-            $this->init();
-        } catch (InvalidArgumentException $e) {
-        }
+        $this->init();
     }
 
     /**

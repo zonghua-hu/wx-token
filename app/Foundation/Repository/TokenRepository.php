@@ -38,7 +38,7 @@ class TokenRepository extends MySQLRepository
         return $this->query
             ->select('*')
             ->from('wei_wx_merchant_info')
-            ->where(['isvalid'=>1])
+            ->where(['isvalid' => 1])
             ->list();
     }
     /**
@@ -52,8 +52,8 @@ class TokenRepository extends MySQLRepository
         return $this->query
             ->select('*')
             ->from('Wx_merchant_info')
-            ->where(['isvalid'=>1])
-            ->where(['app_id' =>$appid])
+            ->where(['isvalid' => 1])
+            ->where(['app_id' => $appid])
             ->one();
     }
 }

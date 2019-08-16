@@ -40,8 +40,8 @@ class Token extends Controller
         $tokenService = new TokenService($appId);
         $accessToken = $tokenService->returnAccessToken();
         if (!$accessToken) {
-            $this->return('',10086,'获取accessToken失败~',2);
+            $this->return('', 10086, '获取accessToken失败~', 2);
         }
-        $this->return($accessToken,200,'succeed');
+        $this->return($accessToken, 200, 'succeed');
     }
 }

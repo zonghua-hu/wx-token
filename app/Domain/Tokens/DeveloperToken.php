@@ -31,12 +31,12 @@ class DeveloperToken extends CommonOperation
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \Exception
      */
-    public function __construct($appId,$appSecret)
+    public function __construct($appId, $appSecret)
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class,TokenRepository::class);
+        parent::__construct(CacheInterface::class, LoggerInterface::class, TokenRepository::class);
         $this->appId = $appId;
         $this->appSecret = $appSecret;
-        $this->cacheKey = $this->appId.$this->key;
+        $this->cacheKey = $this->appId . $this->key;
         $this->freshToken();
     }
 
@@ -46,19 +46,23 @@ class DeveloperToken extends CommonOperation
      */
     private function freshToken()
     {
-        $paramsToken = [
-            'appId' => $this->appId,
-            'appSecret' => $this->appSecret,
-        ];
-        $result = API::invoke('wechat:developer_token.get', $paramsToken);
+        $result = API::invoke(
+            'wechat:developer_token.get',
+            [
+                'grant_type'  => 'client_credential',
+                'appid'  => $this->appId,
+                'secret'  => $this->appSecret,
+            ]
+        );
+
         $accessToken = $result->getBody();
         if ($accessToken['status'] != 200) {
             $this->appAccessToken = false;
-            $this->logger->info(">>>开发者模式：获取最新token失败".$this->appId."原因：".json_encode($accessToken));
+            $this->logger->info(">>>开发者模式：获取最新token失败" . $this->appId . "原因：" . json_encode($accessToken));
         }
         $this->appAccessToken = $accessToken['access_token'];
         if ($this->appAccessToken) {
-            $this->cache->set($this->cacheKey,$this->appAccessToken);
+            $this->cache->set($this->cacheKey, $this->appAccessToken);
         }
     }
 }

@@ -13,11 +13,11 @@ return [
             'method' => 'POST',
         ],
         'authorizer_component_token.post' => [
-            'path' => '/cgi-bin/component/api_authorizer_token?component_access_token={componentToken}',
+            'path' => '/cgi-bin/component/api_authorizer_token',
             'method' => 'POST',
         ],
         'developer_token.get' => [
-            'path' => '/cgi-bin/token?grant_type=client_credential&appid={appId}&secret={appSecret}',
+            'path' => '/cgi-bin/token',
             'method' => 'GET',
         ],
     ]

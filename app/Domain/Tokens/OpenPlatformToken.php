@@ -34,11 +34,11 @@ class OpenPlatformToken extends CommonOperation
      */
     public function __construct($appId)
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class,TokenRepository::class);
+        parent::__construct(CacheInterface::class, LoggerInterface::class, TokenRepository::class);
 
         $this->appId = $appId;
-        $this->cacheKey = $this->appId.$this->key;
-        $this->comCacheKey = $this->comAppId.$this->key;
+        $this->cacheKey = $this->appId . $this->key;
+        $this->comCacheKey = $this->comAppId . $this->key;
         $this->getComponentToken();
         $this->refreshToken();
         $this->returnAccessToken();
@@ -61,24 +61,31 @@ class OpenPlatformToken extends CommonOperation
      */
     private function refreshToken()
     {
-        $appIdTokenData = [
-            'component_appid' => $this->comAppId,
-            'authorizer_appid' => $this->appId,
-            'authorizer_refresh_token' => $this->comAccessToken,
-        ];
-        $componentData = [
-            'componentToken' =>$this->comAccessToken,
-        ];
-        $result = API::invoke('wechat:authorizer_component_token.post', $componentData,$appIdTokenData);
+        $result = API::invoke(
+            'wechat:authorizer_component_token.post',
+            [
+                'query_params' =>
+                    [
+                        'componentToken' => $this->comAccessToken
+                    ],
+                'body' =>
+                    [
+                        'component_appid' => $this->comAppId,
+                        'authorizer_appid' => $this->appId,
+                        'authorizer_refresh_token' => $this->comAccessToken
+                    ]
+            ]
+        );
+
         $comToken = $result->getBody();
         if ($comToken['status'] != 200) {
             $this->appAccessToken = false;
-            $this->logger->info(">>>开放平台模式：获取最新componentToken失败".$this->comAppId."原因：".json_encode($comToken));
+            $this->logger->info(">>>开放平台模式：获取最新componentToken失败" . $this->comAppId . "原因：" . json_encode($comToken));
         }
         $this->appAccessToken = $comToken['access_token'];
 
         if ($this->appAccessToken) {
-            $this->cache->set($this->cacheKey,$this->appAccessToken);
+            $this->cache->set($this->cacheKey, $this->appAccessToken);
         }
     }
 }
