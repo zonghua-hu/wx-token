@@ -8,7 +8,9 @@
 namespace App\Http\Controllers\V1;
 
 use App\Domain\Tokens\TokenService;
+use App\ErrCode;
 use WecarSwoole\Http\Controller;
+use WecarSwoole\Container;
 
 
 /**
@@ -30,17 +32,17 @@ class Token extends Controller
             ]
         ];
     }
-
     /**
      * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws \Throwable
      */
     public function getToken()
     {
         $appId = $this->params();
-        $tokenService = new TokenService($appId);
-        $accessToken = $tokenService->returnAccessToken();
+        $tokenService = Container::make(TokenService::class);
+        $accessToken = $tokenService->getToken($appId);
         if (!$accessToken) {
-            $this->return('', 10086, '获取accessToken失败~', 2);
+            $this->return(ErrCode::FINAL_ACCESS_TOKEN_NULL, '获取accessToken失败,商户信息：' . $appId['appID']);
         }
         $this->return($accessToken, 200, 'succeed');
     }

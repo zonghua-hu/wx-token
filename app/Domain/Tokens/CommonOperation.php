@@ -50,12 +50,14 @@ abstract class CommonOperation
      * 喂车车appId
      * @var string
      */
-    public $comAppId = 'wx46990617c3d8bf81';
+//    public $comAppId = 'wx46990617c3d8bf81';
+    public $comAppId = 'wx1038a3179b1f9d68'; //测试号
     /**
      *喂车车appSecret
      * @var string
      */
-    public $comAppSecret = '615d70ee3463062891771cfb1b4f7ef3';
+//    public $comAppSecret = '615d70ee3463062891771cfb1b4f7ef3';
+    public $comAppSecret = 'e59e535330d63c71454ebd53d90ba5c3'; //测试号
     /**
      * 开放平台刷新token
      * @var

@@ -20,7 +20,7 @@ class Token extends Route
          * 接收参数：appId
          * 返回当前的：access_token
          */
-        $this->post('/v1/tokens', '/V1/TokenRefresh/getToken');
+        $this->post('/v1/tokens', '/V1/Token/getToken');
     }
 
 }

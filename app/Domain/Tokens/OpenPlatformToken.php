@@ -8,10 +8,8 @@
 
 namespace App\Domain\Tokens;
 
-use App\Foundation\Repository\TokenRepository;
+use WecarSwoole\Container;
 use WecarSwoole\Client\API;
-use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
 /**
  * 开放平台模式token类
  * 1.获取第三方appId、secret、ticket
@@ -21,38 +19,33 @@ use Psr\SimpleCache\CacheInterface;
  */
 class OpenPlatformToken extends CommonOperation
 {
-
     public $cacheKey;
     public $comCacheKey;
     public $appId;
-
     /**
-     * OpenPlatformToken constructor.
      * @param $appId
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     * @throws \Exception
+     * @throws \Throwable
      */
-    public function __construct($appId)
+    public function getToken($appId)
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class, TokenRepository::class);
-
         $this->appId = $appId;
         $this->cacheKey = $this->appId . $this->key;
         $this->comCacheKey = $this->comAppId . $this->key;
         $this->getComponentToken();
         $this->refreshToken();
-        $this->returnAccessToken();
     }
-
     /**
-     * 获取componentAccessToken并保存
+     *  获取componentAccessToken并保存
      * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws \Throwable
      */
     private function getComponentToken()
     {
         $this->comAccessToken = $this->cache->get($this->comCacheKey);
         if (!$this->comAccessToken) {
-            $this->comAccessToken = new ComponentToken();
+            $componentToken = Container::get(ComponentToken::class);
+            $componentToken->initComToken();
         }
     }
     /**
@@ -80,7 +73,7 @@ class OpenPlatformToken extends CommonOperation
         $comToken = $result->getBody();
         if ($comToken['status'] != 200) {
             $this->appAccessToken = false;
-            $this->logger->info(">>>开放平台模式：获取最新componentToken失败" . $this->comAppId . "原因：" . json_encode($comToken));
+            $this->logger->info(">>>开放平台模式：获取最新accessToken失败" . $this->comAppId . "原因：" . json_encode($comToken));
         }
         $this->appAccessToken = $comToken['access_token'];
 

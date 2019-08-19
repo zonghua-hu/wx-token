@@ -8,11 +8,7 @@
 
 namespace App\Domain\Tokens;
 
-use App\Foundation\Repository\TokenRepository;
 use WecarSwoole\Client\API;
-use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
-
 /**
  * 开发者模式相关业务
  * Class DeveloperToken
@@ -23,29 +19,18 @@ class DeveloperToken extends CommonOperation
     public $appId;
     public $appSecret;
     public $cacheKey;
-
     /**
-     * DeveloperToken constructor.
      * @param $appId
      * @param $appSecret
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \Exception
      */
-    public function __construct($appId, $appSecret)
+    public function freshToken($appId, $appSecret)
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class, TokenRepository::class);
         $this->appId = $appId;
         $this->appSecret = $appSecret;
         $this->cacheKey = $this->appId . $this->key;
-        $this->freshToken();
-    }
 
-    /**
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     * @throws \Exception
-     */
-    private function freshToken()
-    {
         $result = API::invoke(
             'wechat:developer_token.get',
             [

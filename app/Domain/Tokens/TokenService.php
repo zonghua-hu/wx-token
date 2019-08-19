@@ -8,10 +8,8 @@
 
 namespace App\Domain\Tokens;
 
-use App\Foundation\Repository\TokenRepository;
+use WecarSwoole\Container;
 use Exception;
-use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
 /**
  * 业务逻辑：---------------------------------------------------
  * 1.初始化拿到appId。
@@ -27,37 +25,25 @@ class TokenService extends CommonOperation
 {
     public $appId;
     public $cacheKey;
-
     /**
-     * TokenService constructor.
-     * @param $appData
+     * @param $appId
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     * @throws Exception
+     * @throws \Throwable
      */
-    public function __construct($appData)
+    public function getToken($appId)
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class, TokenRepository::class);
-
-        $this->appId = $appData['appId'];
+        $this->appId = $appId['appId'];
         $this->cacheKey = $this->appId . $this->key;
-        $this->initToken();
-    }
-
-    /**
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     * @throws Exception
-     */
-    private function initToken()
-    {
         $this->appAccessToken = $this->cache->get($this->cacheKey);
         if (!$this->appAccessToken) {
             $this->appAccessToken = self::forceFreshToken();
         }
+        $this->returnAccessToken();
     }
 
     /**
-     * 刷新token
      * @throws Exception
+     * @throws \Throwable
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     private function forceFreshToken()
@@ -68,6 +54,7 @@ class TokenService extends CommonOperation
         }
         $appIdSecret = $appConfig['app_secret'];
         $tokenType = isset($appConfig['pattern']) ? $appConfig['pattern'] : 1;
-        new TokenPattern($this->appId, $appIdSecret, $tokenType);
+        $tokenPattern = Container::make(TokenPattern::class);
+        $tokenPattern->init($this->appId, $appIdSecret, $tokenType);
     }
 }

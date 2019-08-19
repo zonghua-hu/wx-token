@@ -8,31 +8,19 @@
 
 namespace App\Domain\Tokens;
 
-use App\Foundation\Repository\TokenRepository;
-use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
 use WecarSwoole\Client\API;
 
 class ComponentToken extends CommonOperation
 {
     public $cacheKey;
     /**
-     * ComponentToken constructor.
+     * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
-     * @throws \Exception
      */
-    public function __construct()
+    public function initComToken()
     {
-        parent::__construct(CacheInterface::class, LoggerInterface::class, TokenRepository::class);
         $this->cacheKey = $this->comAppId . $this->key;
-
         $this->refreshComToken();
-        $this->returnComToken();
-    }
-
-    private function returnComToken()
-    {
-        return $this->comAccessToken;
     }
     /**
      * @throws \Psr\SimpleCache\InvalidArgumentException

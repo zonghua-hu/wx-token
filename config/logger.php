@@ -29,12 +29,12 @@ return [
             'driver' => 'default',
             'subject' => '喂车告警',
             'to' => [
-                'zonghua.hu@weicheche.cn'=>'胡宗华'
+                'zonghua.hu@weicheche.cn' => '胡宗华'
             ]
         ],
         'file' => File::join(STORAGE_ROOT, 'logs/error.log'),
         'sms' => [
-            '13636807794'=>'胡宗华'
+            '13636807794' => '胡宗华'
         ]
     ],
 ];

@@ -8,25 +8,12 @@
 namespace App\Cron;
 
 use Exception;
-use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
 use App\Domain\Tokens\CommonOperation;
 use App\Domain\Tokens\DeveloperToken;
 use App\Domain\Tokens\OpenPlatformToken;
-use App\Foundation\Repository\TokenRepository;
 
 class TokenAutoFresh extends CommonOperation
 {
-    /**
-     * TokenAutoFresh constructor.
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     * @throws Exception
-     */
-    public function __construct()
-    {
-        parent::__construct(CacheInterface::class, LoggerInterface::class, TokenRepository::class);
-        $this->run();
-    }
 
     /**
      * 1.从缓存中获取token，
@@ -37,7 +24,7 @@ class TokenAutoFresh extends CommonOperation
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \Exception
      */
-    private function run()
+    public function run()
     {
         $appConfig = $this->tokenResp->getAllAppConfig();
         if (!$appConfig) {
@@ -64,7 +51,6 @@ class TokenAutoFresh extends CommonOperation
      * @param $appSecret
      * @param $appPattern
      * @return bool
-     * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \Exception
      */
     private function freshToken($appId, $appSecret, $appPattern)

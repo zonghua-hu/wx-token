@@ -1,13 +1,14 @@
 <?php
 
 use function WecarSwoole\Config\apollo;
+use WecarSwoole\Util\File;
 
 $baseConfig = [
-    'app_name' => '应用名称',
+    'app_name' => 'token子系统',
     // 应用标识，必填
-    'app_flag' => 'SY',
+    'app_flag' => 'TK',
     // 应用id，必填
-    'app_id' => '1000000',
+    'app_id' => '1008625',
     // 可用 server 列表，必填
     'server' => [
         'modules' => apollo('fw.modules'),
@@ -21,18 +22,66 @@ $baseConfig = [
             'password' => 'Chechewei123'
         ]
     ],
-    'redis' => [
-        'main' => [
-            'host' => 'db.redis.wcc.cn',
-            'port' => 6379,
-            'auth' => 'XEXeh1l6nT3wHL0z',
+    //
+    'mysql' => [
+        'weicheche' => [
+            // 读库使用二维数组配置，以支持多个读库
+            'read' => [
+                [
+                    'host' => apollo('fw.mysql.weicheche.ro', 'weicheche_read.host'),
+                    'port' => apollo('fw.mysql.weicheche.ro', 'weicheche.port'),
+                    'user' => apollo('fw.mysql.weicheche.ro', 'weicheche_read.username'),
+                    'password' => apollo('fw.mysql.weicheche.ro', 'weicheche_read.password'),
+                    'database' => apollo('fw.mysql.weicheche.ro', 'weicheche_read.dbname'),
+                    'charset' => apollo('fw.mysql.weicheche.ro', 'weicheche_read.charset'),
+                ]
+            ],
+            // 仅支持一个写库
+            'write' => [
+                'host' => apollo('fw.mysql.weicheche.rw', 'weicheche.host'),
+                'port' => apollo('fw.mysql.weicheche.rw', 'weicheche.port'),
+                'user' => apollo('fw.mysql.weicheche.rw', 'weicheche.username'),
+                'password' => apollo('fw.mysql.weicheche.rw', 'weicheche.password'),
+                'database' => apollo('fw.mysql.weicheche.rw', 'weicheche.dbname'),
+                'charset' => apollo('fw.mysql.weicheche.rw', 'weicheche.charset'),
+            ],
             // 连接池配置
-            '__pool' => [
-                'max_object_num' => 10,
-                'min_object_num' => 1,
-                'max_idle_time' => 60,
+            'pool' => [
+                'size' => apollo('application', 'mysql.weicheche.pool_size') ?: 15
             ]
         ],
+    ],
+    'redis' => [
+        'main' => [
+            'host' => apollo('fw.redis.01', 'redis.host'),
+            'port' => apollo('fw.redis.01', 'redis.port'),
+            'auth' => apollo('fw.redis.01', 'redis.auth'),
+            // 连接池配置
+            '__pool' => [
+                'max_object_num' => apollo('application', 'redis.pool.main.max_num') ?? 15,
+                'min_object_num' => apollo('application', 'redis.pool.main.min_num') ?? 1,
+                'max_idle_time' => apollo('application', 'redis.pool.main.idle_time') ?? 300,
+            ]
+        ],
+        'cache' => [
+            'host' => apollo('fw.redis.01', 'redis.host'),
+            'port' => apollo('fw.redis.01', 'redis.port'),
+            'auth' => apollo('fw.redis.01', 'redis.auth'),
+            // 连接池配置
+            '__pool' => [
+                'max_object_num' => apollo('application', 'redis.pool.cache.max_num') ?? 15,
+                'min_object_num' => apollo('application', 'redis.pool.cache.min_num') ?? 1,
+                'max_idle_time' => apollo('application', 'redis.pool.cache.idle_time') ?? 300,
+            ]
+        ],
+    ],
+    // 缓存配置
+    'cache' => [
+        'driver' => apollo('application', 'cache.driver'),// 可用：redis、file、array、null(一般测试时用来禁用缓存)
+        'prefix' => 'usercenter',
+        'expire' => 3600, // 缓存默认过期时间，单位秒
+        'redis' => 'cache', // 当 driver = redis 时，使用哪个 redis 配置
+        'dir' => File::join(EASYSWOOLE_ROOT, 'storage/cache'), // 当 driver = file 时，缓存存放目录
     ],
     // 并发锁配置
     'concurrent_locker' => [
@@ -45,35 +94,14 @@ $baseConfig = [
         // 记录哪些请求类型的日志
         'methods' => ['POST', 'GET', 'PUT', 'DELETE']
     ],
-    'wcc_private_key' => '-----BEGIN PRIVATE KEY-----
-MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEApFFwW79DIfUCw4t9
-0sww59XroXRYbLCDyab8zdR0rBZ1pDIxx8ABuqs8no5+Y0mZGkBdwqlH5/wFVgwX
-+zG+gQIDAQABAkEAlSG0sBAuhasxDviTAbaAzGjCqo5Fkp/BfEsqNkUUfvmO6L2Q
-XG27qeUmAacVjbZBlhacdZhXhtBBt6fVIMvxYQIhANMkO7FAVpmIvYa416QVBYdX
-brMSLWNKXJI83z7mIpDPAiEAxzqHfUimoFID9DCDNWQ3igv8URRz/HI0kjmabHKJ
-b68CIQCEBcz5aWR8/l6b5eqYo7hgR1Bl0kDlK/M0UbG6L8Z/SwIgNdvPxwG98fda
-FEiNIADwtsQYuP6TgHqLVcB2y7yHBQcCIG7g1jRCQcb6yNlu+dyb35Adf+6IIanU
-qQqo/Ja8ohKN
------END PRIVATE KEY-----
-',
-    'wcc_public_key' => '-----BEGIN PUBLIC KEY-----
-MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKRRcFu/QyH1AsOLfdLMMOfV66F0WGyw
-g8mm/M3UdKwWdaQyMcfAAbqrPJ6OfmNJmRpAXcKpR+f8BVYMF/sxvoECAwEAAQ==
------END PUBLIC KEY-----
-',
-    'ss_public_key' => '-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDWP1vtrNLKoh0IqqtNRjkmC1vm
-z/mVIZ58QnAjD/ZmYockGjkts8N1knvFRZuHenY20wLMmlFtdXKAix5QBUTUQpoA
-EcKu/hieK53nHd9WTz5ht1Au1HM+DR359Wm43TNpSeYniSJGpoRG8t3QBebB3VYy
-tIBhommmFXw6U9owvQIDAQAB
------END PUBLIC KEY-----
-',
+
+    // 最低记录级别：debug, info, warning, error, critical, off
+    'log_level' => 'debug',
 ];
 
 return array_merge(
     $baseConfig,
     ['logger' => include_once __DIR__ . '/logger.php'],
     ['api' => require_once __DIR__ . '/api/api.php'],
-    ['subscriber' => require_once __DIR__ . '/subscriber/subscriber.php'],
-    require_once __DIR__ . '/env/' . ENVIRON . '.php'
+    ['subscriber' => require_once __DIR__ . '/subscriber/subscriber.php']
 );

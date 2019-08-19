@@ -8,8 +8,8 @@
 
 namespace App\Cron;
 
+use WecarSwoole\Container;
 use EasySwoole\EasySwoole\Crontab\AbstractCronTask;
-
 
 class CrontabToken extends AbstractCronTask
 {
@@ -24,7 +24,7 @@ class CrontabToken extends AbstractCronTask
 
     public static function getTaskName(): string
     {
-        return '自动刷新token';
+        return 'wx-token';
     }
 
     /**
@@ -32,9 +32,11 @@ class CrontabToken extends AbstractCronTask
      * @param int $fromWorkerId
      * @param null $flags
      * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws \Throwable
      */
     static function run(\swoole_server $server, int $taskId, int $fromWorkerId, $flags = null)
     {
-        new TokenAutoFresh();
+        $autoToken = Container::make(TokenAutoFresh::class);
+        $autoToken->run();
     }
 }
