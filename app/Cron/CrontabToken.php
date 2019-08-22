@@ -8,6 +8,7 @@
 
 namespace App\Cron;
 
+use swoole_server;
 use WecarSwoole\Container;
 use EasySwoole\EasySwoole\Crontab\AbstractCronTask;
 
@@ -28,13 +29,14 @@ class CrontabToken extends AbstractCronTask
     }
 
     /**
+     * @param swoole_server $server
      * @param int $taskId
      * @param int $fromWorkerId
      * @param null $flags
-     * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \Throwable
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
-    static function run(\swoole_server $server, int $taskId, int $fromWorkerId, $flags = null)
+    public static function run(swoole_server $server, int $taskId, int $fromWorkerId, $flags = null)
     {
         $autoToken = Container::make(TokenAutoFresh::class);
         $autoToken->run();

@@ -17,9 +17,10 @@ $baseConfig = [
     // 邮件。可以配多个
     'mailer' => [
         'default' => [
-            'host' => 'smtp.exmail.qq.com',
-            'username' => 'robot@weicheche.cn',
-            'password' => 'Chechewei123'
+            'host' => apollo('fw.mail', 'mail.host'),
+            'username' => apollo('fw.mail', 'mail.username'),
+            'password' => apollo('fw.mail', 'mail.password'),
+            'port' => apollo('fw.mail', 'mail.port'),
         ]
     ],
     //
@@ -85,18 +86,18 @@ $baseConfig = [
     ],
     // 并发锁配置
     'concurrent_locker' => [
-        'onoff' => 'off',
-        "redis" => ''
+        'onoff' => apollo('application', 'concurrent_locker.onoff') ?: 'off',
+        'redis' => apollo('application', 'concurrent_locker.redis') ?: 'main',
     ],
     // 请求日志配置。默认是关闭的，如果项目需要开启，则自行修改为 on
     'request_log' => [
-        'onoff' => 'off',
+        'onoff' => apollo('application', 'request_log.onoff') ?: 'off',
         // 记录哪些请求类型的日志
-        'methods' => ['POST', 'GET', 'PUT', 'DELETE']
+        'methods' => explode(',', apollo('application', 'request_log.methods'))
     ],
-
     // 最低记录级别：debug, info, warning, error, critical, off
-    'log_level' => 'debug',
+    'log_level' => apollo('application', 'log_level') ?: 'info',
+    'base_url' => apollo('application', 'base_url'),
 ];
 
 return array_merge(

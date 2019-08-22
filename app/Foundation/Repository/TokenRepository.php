@@ -7,9 +7,10 @@
  */
 namespace App\Foundation\Repository;
 
+use App\Domain\Tokens\ITokenRepository;
 use WecarSwoole\Repository\MySQLRepository;
 
-class TokenRepository extends MySQLRepository
+class TokenRepository extends MySQLRepository implements ITokenRepository
 {
     protected function dbAlias(): string
     {
@@ -43,17 +44,17 @@ class TokenRepository extends MySQLRepository
     }
     /**
      * 获取子商户信息
-     * @param $appid
+     * @param $appId
      * @return array|false
      * @throws \Exception
      */
-    public function getAppIdInfo($appid)
+    public function getAppIdInfo($appId)
     {
         return $this->query
             ->select('*')
             ->from('Wx_merchant_info')
             ->where(['isvalid' => 1])
-            ->where(['app_id' => $appid])
+            ->where(['app_id' => $appId])
             ->one();
     }
 }

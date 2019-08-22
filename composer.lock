@@ -1108,17 +1108,17 @@
         },
         {
             "name": "framework/wecarswoole",
-            "version": "v1.0.18",
+            "version": "v1.0.19",
             "source": {
                 "type": "git",
                 "url": "https://gitlab4.weicheche.cn/framework/wecarswoole.git",
-                "reference": "ffd984f5ee2f9f41cacabf104c1d8198ad3523d7"
+                "reference": "4b572b1a7401eef5357ad05791d1f56d58e5d75b"
             },
             "require": {
                 "dev/locker": "^1.0",
                 "dev/mysql": "^1.0",
                 "doctrine/annotations": "~1.6.0",
-                "easyswoole/easyswoole": "~3.2.5",
+                "easyswoole/easyswoole": "^3.2",
                 "ext-redis": "*",
                 "ext-swoole": ">=4.3.0",
                 "monolog/monolog": "~1.24.0",
@@ -1147,7 +1147,7 @@
                 }
             },
             "description": "wecheche foundational web framework",
-            "time": "2019-08-14T08:30:27+00:00"
+            "time": "2019-08-21T04:05:11+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
