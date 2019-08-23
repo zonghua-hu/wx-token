@@ -16,8 +16,6 @@ use WecarSwoole\Client\API;
  */
 class DeveloperToken extends CommonOperation
 {
-    public $appId;
-    public $appSecret;
     public $cacheKey;
     /**
      * @param $appId
@@ -27,23 +25,21 @@ class DeveloperToken extends CommonOperation
      */
     public function freshToken($appId, $appSecret)
     {
-        $this->appId = $appId;
-        $this->appSecret = $appSecret;
-        $this->cacheKey = $this->appId . $this->key;
+        $this->cacheKey = $appId . $this->key;
 
         $result = API::invoke(
             'wechat:developer_token.get',
             [
                 'grant_type'  => 'client_credential',
-                'appid'  => $this->appId,
-                'secret'  => $this->appSecret,
+                'appid'  => $appId,
+                'secret'  => $appSecret,
             ]
         );
 
         $accessToken = $result->getBody();
         if ($accessToken['status'] != 200) {
             $this->appAccessToken = false;
-            $this->logger->info(">>>开发者模式：获取最新token失败" . $this->appId . "原因：" . json_encode($accessToken));
+            $this->logger->info(">>>开发者模式：获取最新token失败" . $appId . "原因：" . json_encode($accessToken));
         }
         $this->appAccessToken = $accessToken['access_token'];
         if ($this->appAccessToken) {

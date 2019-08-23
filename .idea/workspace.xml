@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="90b6e68a-709a-4c80-a9fc-a08e69a53c16" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Domain/Tokens/ITokenRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Cron/CrontabToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Cron/CrontabToken.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Domain/Tokens/CommonOperation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Tokens/CommonOperation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Foundation/Repository/TokenRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Foundation/Repository/TokenRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/V1/Token.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/V1/Token.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/logger.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/logger.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Tokens/DeveloperToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Tokens/DeveloperToken.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Domain/Tokens/TokenService.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Domain/Tokens/TokenService.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Token.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Token.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/V1/Token.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="547">
-              <caret line="45" column="11" lean-forward="true" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
+            <state relative-caret-position="451">
+              <caret line="42" column="42" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
               <folding>
                 <element signature="e#6#93#0#PHP" expanded="true" />
                 <element signature="e#130#165#0#PHP" expanded="true" />
@@ -40,7 +33,7 @@
       <file leaf-file-name="Controller.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vendor/framework/wecarswoole/src/Http/Controller.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="827">
+            <state relative-caret-position="6176">
               <caret line="203" column="23" selection-start-line="203" selection-start-column="23" selection-end-line="203" selection-end-column="23" />
             </state>
           </provider>
@@ -49,8 +42,8 @@
       <file leaf-file-name="TokenRepository.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Foundation/Repository/TokenRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-544">
-              <caret line="18" column="7" lean-forward="true" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+            <state relative-caret-position="384">
+              <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
               <folding>
                 <element signature="e#132#171#0#PHP" expanded="true" />
               </folding>
@@ -61,10 +54,10 @@
       <file leaf-file-name="TokenService.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/TokenService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
+            <state relative-caret-position="577">
+              <caret line="58" column="48" lean-forward="true" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
               <folding>
-                <element signature="e#125#151#0#PHP" expanded="true" />
+                <element signature="e#125#141#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -73,8 +66,8 @@
       <file leaf-file-name="CommonOperation.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/CommonOperation.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="98" column="13" selection-start-line="98" selection-start-column="13" selection-end-line="98" selection-end-column="13" />
+            <state relative-caret-position="289">
+              <caret line="42" column="11" selection-start-line="42" selection-start-column="11" selection-end-line="42" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -82,8 +75,8 @@
       <file leaf-file-name="TokenPattern.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/TokenPattern.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="35" column="52" selection-start-line="35" selection-start-column="52" selection-end-line="35" selection-end-column="52" />
+            <state relative-caret-position="483">
+              <caret line="32" column="48" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
             </state>
           </provider>
         </entry>
@@ -91,8 +84,8 @@
       <file leaf-file-name="OpenPlatformToken.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/OpenPlatformToken.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-555">
-              <caret line="46" column="52" lean-forward="true" selection-start-line="46" selection-start-column="52" selection-end-line="46" selection-end-column="52" />
+            <state relative-caret-position="1280">
+              <caret line="46" column="52" selection-start-line="46" selection-start-column="52" selection-end-line="46" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -100,17 +93,17 @@
       <file leaf-file-name="ComponentToken.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/ComponentToken.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-235">
+            <state relative-caret-position="224">
               <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DeveloperToken.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DeveloperToken.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/DeveloperToken.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-352">
-              <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
+            <state relative-caret-position="547">
+              <caret line="39" column="44" lean-forward="true" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -118,8 +111,8 @@
       <file leaf-file-name="ErrCode.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/ErrCode.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="20" selection-end-column="65" />
+            <state relative-caret-position="579">
+              <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -180,7 +173,6 @@
         <option value="$PROJECT_DIR$/vendor/framework/wecarswoole/src/CronTabUtil.php" />
         <option value="$PROJECT_DIR$/config/cron.php" />
         <option value="$PROJECT_DIR$/app/Domain/Tokens/TokenPattern.php" />
-        <option value="$PROJECT_DIR$/app/Domain/Tokens/DeveloperToken.php" />
         <option value="$PROJECT_DIR$/app/ErrCode.php" />
         <option value="$PROJECT_DIR$/app/Domain/Tokens/ComponentToken.php" />
         <option value="$PROJECT_DIR$/app/Domain/Tokens/OpenPlatformToken.php" />
@@ -192,8 +184,9 @@
         <option value="$PROJECT_DIR$/app/Foundation/Repository/TokenRepository.php" />
         <option value="$PROJECT_DIR$/app/Domain/Tokens/ITokenRepository.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/V1/Token.php" />
-        <option value="$PROJECT_DIR$/app/Domain/Tokens/TokenService.php" />
         <option value="$PROJECT_DIR$/app/Domain/Tokens/CommonOperation.php" />
+        <option value="$PROJECT_DIR$/app/Domain/Tokens/TokenService.php" />
+        <option value="$PROJECT_DIR$/app/Domain/Tokens/DeveloperToken.php" />
       </list>
     </option>
   </component>
@@ -391,17 +384,18 @@
       <workItem from="1566201138972" duration="9945000" />
       <workItem from="1566284794392" duration="608000" />
       <workItem from="1566438012618" duration="1176000" />
+      <workItem from="1566533240508" duration="501000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="145008000" />
+    <option name="totallyTimeSpent" value="145509000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16684435" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1684435" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.32978722" />
@@ -525,13 +519,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/framework/wecarswoole/src/Process/CronHeartBeatProcess.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/framework/wecarswoole/src/Process/CronHeartBeatProcess.php" />
     <entry file="file://$PROJECT_DIR$/vendor/framework/wecarswoole/src/CronTabUtil.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="513">
@@ -678,83 +666,83 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/DeveloperToken.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-352">
-          <caret line="16" column="6" selection-start-line="16" selection-start-column="6" selection-end-line="16" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/TokenPattern.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="35" column="52" selection-start-line="35" selection-start-column="52" selection-end-line="35" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/ComponentToken.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-235">
+        <state relative-caret-position="224">
           <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/OpenPlatformToken.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-555">
-          <caret line="46" column="52" lean-forward="true" selection-start-line="46" selection-start-column="52" selection-end-line="46" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/ErrCode.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="448">
-          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="20" selection-end-column="65" />
+        <state relative-caret-position="1280">
+          <caret line="46" column="52" selection-start-line="46" selection-start-column="52" selection-end-line="46" selection-end-column="52" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Foundation/Repository/TokenRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-544">
-          <caret line="18" column="7" lean-forward="true" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+        <state relative-caret-position="384">
+          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
           <folding>
             <element signature="e#132#171#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/TokenService.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
-          <folding>
-            <element signature="e#125#151#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/CommonOperation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="98" column="13" selection-start-line="98" selection-start-column="13" selection-end-line="98" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/framework/wecarswoole/src/Http/Controller.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="827">
+        <state relative-caret-position="6176">
           <caret line="203" column="23" selection-start-line="203" selection-start-column="23" selection-end-line="203" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/V1/Token.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
-          <caret line="45" column="11" lean-forward="true" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="11" />
+        <state relative-caret-position="451">
+          <caret line="42" column="42" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
           <folding>
             <element signature="e#6#93#0#PHP" expanded="true" />
             <element signature="e#130#165#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/ErrCode.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="579">
+          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/TokenService.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="577">
+          <caret line="58" column="48" lean-forward="true" selection-start-line="58" selection-start-column="48" selection-end-line="58" selection-end-column="48" />
+          <folding>
+            <element signature="e#125#141#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/CommonOperation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="42" column="11" selection-start-line="42" selection-start-column="11" selection-end-line="42" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/TokenPattern.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="32" column="48" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Domain/Tokens/DeveloperToken.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="547">
+          <caret line="39" column="44" lean-forward="true" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="44" />
         </state>
       </provider>
     </entry>

@@ -8,6 +8,7 @@
 
 namespace App\Domain\Tokens;
 
+use App\ErrCode;
 use WecarSwoole\Container;
 use Exception;
 /**
@@ -27,6 +28,7 @@ class TokenService extends CommonOperation
     public $cacheKey;
     /**
      * @param $appId
+     * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \Throwable
      */
@@ -38,7 +40,7 @@ class TokenService extends CommonOperation
         if (!$this->appAccessToken) {
             $this->appAccessToken = self::forceFreshToken();
         }
-        $this->returnAccessToken();
+        return $this->returnAccessToken();
     }
 
     /**
@@ -50,7 +52,7 @@ class TokenService extends CommonOperation
     {
         $appConfig = $this->tokenResp->getAppIdInfo($this->appId);
         if (!$appConfig) {
-            throw new Exception('获取' . $this->appId . '商户信息出错', 402);
+            throw new Exception('获取' . $this->appId . '商户信息出错', ErrCode::MERCHANT_INFO_NULL);
         }
         $appIdSecret = $appConfig['app_secret'];
         $tokenType = isset($appConfig['pattern']) ? $appConfig['pattern'] : 1;
