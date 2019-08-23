@@ -16,17 +16,14 @@ use WecarSwoole\Client\API;
  */
 class DeveloperToken extends CommonOperation
 {
-    public $cacheKey;
     /**
      * @param $appId
      * @param $appSecret
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \Exception
      */
-    public function freshToken($appId, $appSecret)
+    public function getToken($appId, $appSecret)
     {
-        $this->cacheKey = $appId . $this->key;
-
         $result = API::invoke(
             'wechat:developer_token.get',
             [
@@ -43,7 +40,7 @@ class DeveloperToken extends CommonOperation
         }
         $this->appAccessToken = $accessToken['access_token'];
         if ($this->appAccessToken) {
-            $this->cache->set($this->cacheKey, $this->appAccessToken);
+            $this->cache->set($appId . $this->key, $this->appAccessToken);
         }
     }
 }

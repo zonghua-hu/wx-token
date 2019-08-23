@@ -13,9 +13,6 @@ use Psr\SimpleCache\InvalidArgumentException;
 
 class TokenPattern extends CommonOperation
 {
-    public $appId;
-    public $appSecret;
-    public $tokenType;
     /**
      * @param $appId
      * @param $appSecret
@@ -23,18 +20,14 @@ class TokenPattern extends CommonOperation
      * @throws InvalidArgumentException
      * @throws \Throwable
      */
-    public function init($appId, $appSecret, $tokenType)
+    public function freshDifferentToken($appId, $appSecret, $tokenType)
     {
-        $this->appId = $appId;
-        $this->appSecret = $appSecret;
-        $this->tokenType = $tokenType;
-
-        if ($this->tokenType == $this->developerToken) {
+        if ($tokenType == $this->developerToken) {
             $developerToken = Container::get(DeveloperToken::class);
-            $developerToken->freshToken($this->appId, $this->appSecret);
-        } elseif ($this->tokenType == $this->openPlatform) {
+            $developerToken->getToken($appId, $appSecret);
+        } elseif ($tokenType == $this->openPlatform) {
             $openPlatformToken = Container::get(OpenPlatformToken::class);
-            $openPlatformToken->getToken($this->appId);
+            $openPlatformToken->getToken($appId);
         }
     }
 

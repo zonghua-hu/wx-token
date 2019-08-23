@@ -12,14 +12,12 @@ use WecarSwoole\Client\API;
 
 class ComponentToken extends CommonOperation
 {
-    public $cacheKey;
     /**
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function initComToken()
     {
-        $this->cacheKey = $this->comAppId . $this->key;
         $this->refreshComToken();
     }
     /**
@@ -45,7 +43,7 @@ class ComponentToken extends CommonOperation
         $this->comAccessToken = $comToken['access_token'];
 
         if ($this->comAccessToken) {
-            $this->cache->set($this->cacheKey, $this->comAccessToken);
+            $this->cache->set($this->comAppId . $this->key, $this->comAccessToken);
         }
     }
 }

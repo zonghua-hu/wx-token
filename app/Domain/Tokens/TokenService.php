@@ -57,6 +57,6 @@ class TokenService extends CommonOperation
         $appIdSecret = $appConfig['app_secret'];
         $tokenType = isset($appConfig['pattern']) ? $appConfig['pattern'] : 1;
         $tokenPattern = Container::make(TokenPattern::class);
-        $tokenPattern->init($this->appId, $appIdSecret, $tokenType);
+        $tokenPattern->freshDifferentToken($this->appId, $appIdSecret, $tokenType);
     }
 }
