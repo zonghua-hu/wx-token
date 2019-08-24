@@ -20,7 +20,8 @@ $baseConfig = [
             'host' => apollo('fw.mail', 'mail.host'),
             'username' => apollo('fw.mail', 'mail.username'),
             'password' => apollo('fw.mail', 'mail.password'),
-            'port' => apollo('fw.mail', 'mail.port'),
+            'port' => apollo('fw.mail', 'mail.port') ?: 25,
+            'encryption' => apollo('fw.mail', 'mail.encryption') ?: 'ssl',
         ]
     ],
     //
