@@ -103,7 +103,7 @@ $baseConfig = [
 
 return array_merge(
     $baseConfig,
-    ['logger' => include_once __DIR__ . '/logger.php'],
-    ['api' => require_once __DIR__ . '/api/api.php'],
-    ['subscriber' => require_once __DIR__ . '/subscriber/subscriber.php']
+    ['logger' => include_once CONFIG_ROOT . '/logger.php'],
+    ['api' => require_once CONFIG_ROOT . '/api/api.php'],
+    ['subscriber' => require_once CONFIG_ROOT . '/subscriber/subscriber.php']
 );
